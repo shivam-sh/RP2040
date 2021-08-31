@@ -1,16 +1,23 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Pull in SDK (must be before project)
-include(pico_sdk_import.cmake)
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
-project(Blink)
+# Set project name and C/C++ standards
+project(blink C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(blink
-    blink.c
-    )
+# create pico_sdk subdirectory for the libraries
+pico_sdk_init()
 
-target_link_libraries(blink pico_stdlib)
+# Tell CMake where to find the source file
+add_executable(${PROJECT_NAME}
+    main.c
+)
 
-# pico_add_extra_outputs(blink)
+pico_add_extra_outputs(${PROJECT_NAME})
 
-# example_auto_set_url(blink)
+target_link_libraries(${PROJECT_NAME}
+    pico_stdlib
+)
