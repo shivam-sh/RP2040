@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
+set(PICO_BOARD "adafruit_feather_rp2040")
+
 # Pull in SDK (must be before project)
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
@@ -17,7 +19,6 @@ add_executable(${PROJECT_NAME}
 )
 
 pico_add_extra_outputs(${PROJECT_NAME})
-
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
 )
