@@ -64,15 +64,15 @@ int main() {
         if (vol_up) {
             multicore_reset_core1();
             multicore_launch_core1(send_vol_up);
-            sleep_ms(200);
+            sleep_ms(100);
         } else if (mute) {
             multicore_reset_core1();
             multicore_launch_core1(send_mute);
-            sleep_ms(1000);
+            sleep_ms(500);
         } else if (vol_down) {
             multicore_reset_core1();
             multicore_launch_core1(send_vol_down);
-            sleep_ms(200);
+            sleep_ms(100);
         }
     }
 }
