@@ -2,14 +2,17 @@
 #include "pico/multicore.h"
 #include "pico/stdlib.h"
 
+// Optional Voltage out (for breadboard layout purposes)
+const uint VOUT = 6;
+
 // IR Signal Output Pins (Combine outputs with transistor)
 const uint IR_GPIO = 27;
 const uint CARRIER_GPIO = 28;
 
 // Button Input Pins
-const uint VOL_UP_GPIO = 12;
-const uint MUTE_GPIO = 11;
-const uint VOL_DOWN_GPIO = 10;
+const uint VOL_UP_GPIO = 1;
+const uint MUTE_GPIO = 19;
+const uint VOL_DOWN_GPIO =20;
 
 // Input State Variables
 volatile bool vol_up = false;
@@ -26,16 +29,20 @@ void send_vol_down();
 
 int main() {
     // Initialize GPIO
+    gpio_init(VOUT);
     gpio_init(IR_GPIO);
     gpio_init(VOL_UP_GPIO);
     gpio_init(VOL_DOWN_GPIO);
     gpio_init(MUTE_GPIO);
 
     // Set GPIO direction
+    gpio_set_dir(VOUT, GPIO_OUT);
     gpio_set_dir(IR_GPIO, GPIO_OUT);
     gpio_set_dir(VOL_UP_GPIO, GPIO_IN);
     gpio_set_dir(VOL_DOWN_GPIO, GPIO_IN);
     gpio_set_dir(MUTE_GPIO, GPIO_IN);
+
+    gpio_put(VOUT, true);
 
     // Set GPIO interrupts on change
     gpio_set_irq_enabled_with_callback(VOL_UP_GPIO, 0b1100, true, irq_handler);
